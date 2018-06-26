@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response as Response;
 use FastRoute as FastRoute;
 use FastRoute\RouteCollector as RouteCollector;
 use FastRoute\Dispatcher as Dispatcher;
+use SocialNews\Framework\Rendering\TwigTemplateRendererFactory as TemplateRendererFactory;
 
 TracyDebugger::enable();
 
@@ -40,8 +41,10 @@ switch ($routeInfo[0]) {
         [$controllerName, $method] = explode('#', $routeInfo[1]);
         $vars = $routeInfo[2];
 
-        $controller = new $controllerName;
+        $injector = include('Dependencies.php');
+        $controller = $injector->make($controllerName);
         $response = $controller->$method($request, $vars);
+
         break;
 }
 
