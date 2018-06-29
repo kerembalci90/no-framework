@@ -27,7 +27,7 @@ $injector->share(SubmissionsQuery::class);
 
 $injector->define(
     DatabaseUrl::class,
-    [':sqlite:///' . ROOT_DIR . '/storage/db.sqlite3']
+    [':url' => 'sqlite:///' . ROOT_DIR . '/storage/db.sqlite3']
 );
 
 $injector->delegate(
