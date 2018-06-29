@@ -38,4 +38,6 @@ $injector->delegate(
     }
 );
 
+$injector->share(Connection::class);
+
 return $injector;
