@@ -9,6 +9,7 @@ use SocialNews\FrontPage\Infrastructure\MockSubmissionsQuery as MockSubmissionsQ
 use SocialNews\Framework\Dbal\DatabaseUrl as DatabaseUrl;
 use Doctrine\DBAL\Connection;
 use SocialNews\Framework\Dbal\ConnectionFactory;
+use SocialNews\FrontPage\Infrastructure\DbalSubmissionsQuery;
 
 $injector = new Injector();
 
@@ -22,7 +23,7 @@ $injector->delegate(
 
 $injector->define(TemplateDirectory::class, [':rootDirectory' => ROOT_DIR]);
 
-$injector->alias(SubmissionsQuery::class, MockSubmissionsQuery::class);
+$injector->alias(SubmissionsQuery::class, DbalSubmissionsQuery::class);
 $injector->share(SubmissionsQuery::class);
 
 $injector->define(
