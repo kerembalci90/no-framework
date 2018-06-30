@@ -17,7 +17,13 @@ final class SubmissionController {
 
     public function show(Request $request): Response
     {
-        $content = 'Submission controller';
+        $content = $this->templateRenderer->render('Submission.html.twig');
+        return new Response($content);
+    }
+
+    public function submit(Request $request): Response
+    {
+        $content = $request->get('title') . ' - ' . $request->get('url');
         return new Response($content);
     }
 }
