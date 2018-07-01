@@ -2,6 +2,7 @@
 
 namespace SocialNews\Submission\Presentation;
 
+use SocialNews\Framework\Csrf\StoredTokenValidator;
 use Symfony\Component\HttpFoundation\Request as Request;
 use Symfony\Component\HttpFoundation\Response as Response;
 use SocialNews\Framework\Rendering\TemplateRenderer as TemplateRenderer;
@@ -9,10 +10,12 @@ use SocialNews\Framework\Rendering\TemplateRenderer as TemplateRenderer;
 final class SubmissionController {
 
     private $templateRenderer;
+    private $storedTokenValidator;
 
-    public function __construct(TemplateRenderer $templateRenderer)
+    public function __construct(TemplateRenderer $templateRenderer, StoredTokenValidator $storedTokenValidator)
     {
         $this->templateRenderer = $templateRenderer;
+        $this->storedTokenValidator = $storedTokenValidator;
     }
 
     public function show(Request $request): Response
