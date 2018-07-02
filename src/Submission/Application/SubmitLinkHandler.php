@@ -3,6 +3,7 @@
 namespace SocialNews\Submission\Application;
 
 use SocialNews\Submission\Domain\SubmissionRepository;
+use SocialNews\Submission\Domain\Submission;
 
 final class SubmitLinkHandler
 {
