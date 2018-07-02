@@ -16,7 +16,7 @@ final class SubmitLinkHandler
 
     public function handle(SubmitLink $command): void
     {
-        $submission = Submission::submit( $command->getUrl(), $command->getTitle());
+        $submission = Submission::submit($command->getUrl(), $command->getTitle());
         $this->submissionRepository->add($submission);
     }
 }

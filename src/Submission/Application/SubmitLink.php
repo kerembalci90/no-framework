@@ -9,7 +9,7 @@ final class SubmitLink
 
     public function __construct(string $url, string $title)
     {
-        $this->url = url;
+        $this->url = $url;
         $this->title = $title;
     }
 

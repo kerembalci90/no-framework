@@ -15,16 +15,16 @@ use SocialNews\Framework\Csrf\Token;
 final class SubmissionController {
 
     private $templateRenderer;
-    private $storedTokenValidator;
     private $session;
     private $submitLinkHandler;
+    private $submissionFormFactory;
 
-    public function __construct(TemplateRenderer $templateRenderer, StoredTokenValidator $storedTokenValidator, Session $session, SubmitLinkHandler $submitLinkHandler)
+    public function __construct(TemplateRenderer $templateRenderer, Session $session, SubmitLinkHandler $submitLinkHandler, SubmissionFormFactory $submissionFormFactory)
     {
         $this->templateRenderer = $templateRenderer;
-        $this->storedTokenValidator = $storedTokenValidator;
         $this->session = $session;
         $this->submitLinkHandler = $submitLinkHandler;
+        $this->submissionFormFactory = $submissionFormFactory;
     }
 
     public function show(Request $request): Response
@@ -37,15 +37,17 @@ final class SubmissionController {
     {
         $response = new RedirectResponse('/submit');
 
-        if(!$this->storedTokenValidator->validate('submission', new Token((string)$request->get('token')))) {
-            $this->session->getFlashBag()->add('errors', 'Invalid token');
+        $submissionForm = $this->submissionFormFactory->createFormRequest($request);
+
+        if($submissionForm->hasValidationErrors())
+        {
+            foreach ($submissionForm->getValidationErrors() as $errorMessage) {
+                $this->session->getFlashBag('errors', $errorMessage);
+            }
             return $response;
         }
 
-        $this->submitLinkHandler->handle(new SubmitLink(
-            $request->get('url'),
-            $request->get('title')
-        ));
+        $this->submitLinkHandler->handle($submissionForm->toCommand());
 
         $this->session->getFlashBag()->add('success', 'Your URL was submitted successfully');
 
