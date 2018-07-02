@@ -1,0 +1,1 @@
+Tutorial done from scratch following the Professional PHP book: https://patricklouys.com/professional-php/
