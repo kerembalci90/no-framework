@@ -37,7 +37,7 @@ final class SubmissionController {
     {
         $response = new RedirectResponse('/submit');
 
-        $submissionForm = $this->submissionFormFactory->createFormRequest($request);
+        $submissionForm = $this->submissionFormFactory->createFromRequest($request);
 
         if($submissionForm->hasValidationErrors())
         {

@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace SocialNews\Submission\Presentation;
+namespace SocialNews\User\Presentation;
 
 use SocialNews\Framework\Csrf\StoredTokenValidator;
 use Symfony\Component\HttpFoundation\Request;
 
-final class SubmissionFormFactory
+final class RegistrationFormFactory
 {
     private $storedTokenValidator;
 
@@ -14,15 +14,13 @@ final class SubmissionFormFactory
         $this->storedTokenValidator = $storedTokenValidator;
     }
 
-    public function createFromRequest(Request $request): SubmissionForm
+    public function createFromRequest(Request $request): RegistrationForm
     {
-        return new SubmissionForm(
+        return new RegistrationForm(
             $this->storedTokenValidator,
             (string)$request->get('token'),
-            (string)$request->get('title'),
-            (string)$request->get('url')
+            (string)$request->get('nickname'),
+            (string)$request->get('password')
         );
     }
-
-
 }
